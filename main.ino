@@ -28,44 +28,58 @@
   https://www.arduino.cc/en/Tutorial/BuiltInExamples/BlinkWithoutDelay
 */
 
-// constants won't change. Used here to set a pin number:
-const int ledPin =  LED_BUILTIN;// the number of the LED pin
-
-// Variables will change:
-int ledState = LOW;             // ledState used to set the LED
-
-// Generally, you should use "unsigned long" for variables that hold time
-// The value will quickly become too large for an int to store
-unsigned long previousMillis = 0;        // will store last time LED was updated
-
-// constants won't change:
-const long interval = 1000;           // interval at which to blink (milliseconds)
-
+#define r0 2 // pin for row 0
+#define r1 3 // pin for row 1
+#define r2 4 // ...
+#define r3 5
+#define r4 6
+#define r5 7
+#define r6 8
+#define r7 9
+#define c0 10 // pin for column 0
+#define c1 11 // pin for column 1
+#define c2 12 // ...
+#define c3 13
+#define c4 A0
+#define c5 A1
+#define c6 A2
+#define c7 A3
+int row[] = {r0, r1, r2, r3, r4, r5, r6, r7};
+int column[] = {c0, c1, c2, c3, c4, c5, c6, c7};
+               
 void setup() {
-  // set the digital pin as output:
-  pinMode(ledPin, OUTPUT);
+  for(int i = 0; i<=7; i++){
+    pinMode(row[i], OUTPUT);
+  }
+  for(int i = 0; i<=7; i++){
+    pinMode(column[i], OUTPUT);
+  }
+  clearDisplay();
 }
-
 void loop() {
-  // here is where you'd put code that needs to be running all the time.
-
-  // check to see if it's time to blink the LED; that is, if the difference
-  // between the current time and last time you blinked the LED is bigger than
-  // the interval at which you want to blink the LED.
-  unsigned long currentMillis = millis();
-
-  if (currentMillis - previousMillis >= interval) {
-    // save the last time you blinked the LED
-    previousMillis = currentMillis;
-
-    // if the LED is off turn it on and vice-versa:
-    if (ledState == LOW) {
-      ledState = HIGH;
-    } else {
-      ledState = LOW;
+  for(int i=0; i<=7; i++){
+    for(int j=0; j<=7; j++){
+      switchLED(row[i],column[j],1);
+      delay(100);
+      switchLED(row[i],column[j],0);
     }
-
-    // set the LED with the ledState of the variable:
-    digitalWrite(ledPin, ledState);
+  }
+}
+void clearDisplay(){
+   for(int i = 0; i<=7; i++){
+      digitalWrite(row[i],LOW); 
+  }
+  for(int i = 0; i<=7; i++){
+    digitalWrite(column[i], HIGH);
+  } 
+}
+void switchLED(int r, int c, bool ON){
+  if(ON){
+    digitalWrite(r, HIGH);
+    digitalWrite(c, LOW);
+  }
+  else{
+    digitalWrite(r, LOW);
+    digitalWrite(c, HIGH);
   }
 }
