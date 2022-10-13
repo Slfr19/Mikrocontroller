@@ -1,10 +1,8 @@
 /*
   Blink without Delay
-
   Turns on and off a light emitting diode (LED) connected to a digital pin,
   without using the delay() function. This means that other code can run at the
   same time without being interrupted by the LED code.
-
   The circuit:
   - Use the onboard LED.
   - Note: Most Arduinos have an on-board LED you can control. On the UNO, MEGA
@@ -13,7 +11,6 @@
     If you want to know what pin the on-board LED is connected to on your
     Arduino model, check the Technical Specs of your board at:
     https://www.arduino.cc/en/Main/Products
-
   created 2005
   by David A. Mellis
   modified 8 Feb 2010
@@ -22,9 +19,7 @@
   by Scott Fitzgerald
   modified 9 Jan 2017
   by Arturo Guadalupi
-
   This example code is in the public domain.
-
   https://www.arduino.cc/en/Tutorial/BuiltInExamples/BlinkWithoutDelay
 */
 
@@ -36,14 +31,14 @@
 #define r5 7
 #define r6 8
 #define r7 9
-#define c0 10 // pin for column 0
-#define c1 11 // pin for column 1
-#define c2 12 // ...
-#define c3 13
-#define c4 A0
-#define c5 A1
-#define c6 A2
-#define c7 A3
+#define c0 A0 // pin for column 0
+#define c1 A1 // pin for column 1
+#define c2 A2 // ...
+#define c3 A3
+#define c4 A4
+#define c5 A5
+#define c6 A6
+#define c7 A7
 int row[] = {r0, r1, r2, r3, r4, r5, r6, r7};
 int column[] = {c0, c1, c2, c3, c4, c5, c6, c7};
                
