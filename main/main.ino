@@ -41,8 +41,13 @@
 #define c7 A7
 int column[] = {r0, r1, r2, r3, r4, r5, r6, r7};
 int row[] = {c0, c1, c2, c3, c4, c5, c6, c7};
-int lastmillis_1 = millis();
-int time_past = millis() - lastmillis_1;
+int n1 = millis();
+int n2 = millis();
+int n3 = millis();
+int n4 = millis();
+
+int lastmillis_1[] = {n1, n2, n3, n4};
+int time_past = millis();
             
 void setup() {
   for(int i = 0; i<=7; i++){
@@ -54,14 +59,14 @@ void setup() {
   clearDisplay();
 }
 
-int blink(int x, int y, int j, int i, int blin){
+int blink(int x, int y, int j, int i, int blin, int numb){
   if ( x==j && y==i){
-    time_past = millis() - lastmillis_1;
+    time_past = millis() - lastmillis_1[numb];
     if(time_past < (blin / 2)){
       return 1; 
     }
      if(time_past > blin){
-      lastmillis_1 = int(millis()); 
+      lastmillis_1[numb] = int(millis()); 
     }
   }
   return 0;
@@ -71,17 +76,25 @@ void loop() {
   for(int i=0; i<=7; i++){
     for(int j=0; j<=7; j++){
       if( i == 0 || j == 0 || i == 7 || j == 7){
-        if( blink(i,j,i,j,500) == 1){
+        if( blink(i,j,i,j,500, 0) == 1){
           continue;
         }
       }
-      /*
-      if( i == 1 || j == 1 || i == 6 || j == 6 && i != 0 && j != 0 && i != 7 && j != 7){
-        if( blink(i,j,i,j,1000) == 1){
+      
+      if( (i == 1 || j == 1 || i == 6 || j == 6) && i != 0 && j != 0 && i != 7 && j != 7 ){
+        if( blink(i,j,i,j,1000, 1) == 1){
           continue;
         }
       }
-      */
+
+      if( (i == 2 || j == 2 || i == 5 || j == 5) && i != 0 && j != 0 && i != 7 && j != 7 && i != 1 && j != 1 && i != 6 && j != 6){
+        if( blink(i,j,i,j,2000, 2) == 1){
+          continue;
+        }
+      }
+      
+      
+      
       switchLED(row[i],column[j],1);      
       //delay(0);      
       switchLED(row[i],column[j],0);
