@@ -39,9 +39,11 @@
 #define c5 A5
 #define c6 A6
 #define c7 A7
-int row[] = {r0, r1, r2, r3, r4, r5, r6, r7};
-int column[] = {c0, c1, c2, c3, c4, c5, c6, c7};
-               
+int column[] = {r0, r1, r2, r3, r4, r5, r6, r7};
+int row[] = {c0, c1, c2, c3, c4, c5, c6, c7};
+int lastmillis_1 = millis();
+int time_past = millis() - lastmillis_1;
+            
 void setup() {
   for(int i = 0; i<=7; i++){
     pinMode(row[i], OUTPUT);
@@ -51,11 +53,37 @@ void setup() {
   }
   clearDisplay();
 }
+
+int blink(int x, int y, int j, int i, int blin){
+  if ( x==j && y==i){
+    time_past = millis() - lastmillis_1;
+    if(time_past < (blin / 2)){
+      return 1; 
+    }
+     if(time_past > blin){
+      lastmillis_1 = int(millis()); 
+    }
+  }
+  return 0;
+}
 void loop() {
+ 
   for(int i=0; i<=7; i++){
     for(int j=0; j<=7; j++){
-      switchLED(row[i],column[j],1);
-      delay(100);
+      if( i == 0 || j == 0 || i == 7 || j == 7){
+        if( blink(i,j,i,j,500) == 1){
+          continue;
+        }
+      }
+      /*
+      if( i == 1 || j == 1 || i == 6 || j == 6 && i != 0 && j != 0 && i != 7 && j != 7){
+        if( blink(i,j,i,j,1000) == 1){
+          continue;
+        }
+      }
+      */
+      switchLED(row[i],column[j],1);      
+      //delay(0);      
       switchLED(row[i],column[j],0);
     }
   }
