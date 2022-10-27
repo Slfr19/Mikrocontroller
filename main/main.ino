@@ -1,27 +1,3 @@
-/*
-  Blink without Delay
-  Turns on and off a light emitting diode (LED) connected to a digital pin,
-  without using the delay() function. This means that other code can run at the
-  same time without being interrupted by the LED code.
-  The circuit:
-  - Use the onboard LED.
-  - Note: Most Arduinos have an on-board LED you can control. On the UNO, MEGA
-    and ZERO it is attached to digital pin 13, on MKR1000 on pin 6. LED_BUILTIN
-    is set to the correct LED pin independent of which board is used.
-    If you want to know what pin the on-board LED is connected to on your
-    Arduino model, check the Technical Specs of your board at:
-    https://www.arduino.cc/en/Main/Products
-  created 2005
-  by David A. Mellis
-  modified 8 Feb 2010
-  by Paul Stoffregen
-  modified 11 Nov 2013
-  by Scott Fitzgerald
-  modified 9 Jan 2017
-  by Arturo Guadalupi
-  This example code is in the public domain.
-  https://www.arduino.cc/en/Tutorial/BuiltInExamples/BlinkWithoutDelay
-*/
 
 #define r0 2 // pin for row 0
 #define r1 3 // pin for row 1
@@ -39,15 +15,42 @@
 #define c5 A5
 #define c6 A6
 #define c7 A7
+
+#define x_con 10
+#define y_con 11
+
 int column[] = {r0, r1, r2, r3, r4, r5, r6, r7};
 int row[] = {c0, c1, c2, c3, c4, c5, c6, c7};
+
 int n1 = millis();
 int n2 = millis();
 int n3 = millis();
 int n4 = millis();
 
 int lastmillis_1[] = {n1, n2, n3, n4};
+
+bool cords_17_289[] = {1,  1,  1,  1,  1,  1,  1,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,
+1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  1,
+1,  0,  1,  1,  1,  0,  1,  1,  1,  1,  1,  0,  1,  1,  1,  0,  1,
+1,  0,  0,  0,  1,  0,  0,  0,  1,  0,  1,  0,  0,  0,  0,  0,  1,
+1,  1,  1,  1,  1,  0,  1,  0,  1,  0,  1,  1,  1,  1,  1,  0,  1,
+1,  0,  0,  0,  1,  0,  1,  0,  1,  0,  1,  0,  0,  0,  1,  0,  1,
+1,  0,  1,  0,  1,  1,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,
+1,  0,  1,  0,  0,  0,  1,  0,  1,  0,  1,  0,  1,  0,  0,  0,  1,
+1,  0,  1,  1,  1,  0,  1,  0,  1,  0,  1,  0,  1,  1,  1,  1,  1,
+1,  0,  0,  0,  1,  0,  0,  0,  1,  0,  1,  0,  1,  0,  0,  0,  1,
+1,  1,  1,  0,  1,  1,  1,  1,  1,  0,  1,  0,  1,  0,  1,  1,  1,
+1,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  1,  0,  0,  0,  1,
+1,  0,  1,  1,  1,  0,  1,  1,  1,  1,  1,  0,  1,  1,  1,  0,  1,
+1,  0,  1,  0,  0,  0,  1,  0,  0,  0,  1,  0,  0,  0,  1,  0,  1,
+1,  0,  1,  0,  1,  1,  1,  0,  1,  1,  1,  1,  1,  0,  1,  0,  1,
+1,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,
+1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  1,  1,  1,  1,  1,  1,  1};
+
+int player_coords[] = {4, -5};
+int timer_player = millis();
 int time_past = millis();
+
             
 void setup() {
   for(int i = 0; i<=7; i++){
@@ -59,48 +62,7 @@ void setup() {
   clearDisplay();
 }
 
-int blink(int x, int y, int j, int i, int blin, int numb){
-  if ( x==j && y==i){
-    time_past = millis() - lastmillis_1[numb];
-    if(time_past < (blin / 2)){
-      return 1; 
-    }
-     if(time_past > blin){
-      lastmillis_1[numb] = int(millis()); 
-    }
-  }
-  return 0;
-}
-void loop() {
- 
-  for(int i=0; i<=7; i++){
-    for(int j=0; j<=7; j++){
-      if( i == 0 || j == 0 || i == 7 || j == 7){
-        if( blink(i,j,i,j,500, 0) == 1){
-          continue;
-        }
-      }
-      
-      if( (i == 1 || j == 1 || i == 6 || j == 6) && i != 0 && j != 0 && i != 7 && j != 7 ){
-        if( blink(i,j,i,j,1000, 1) == 1){
-          continue;
-        }
-      }
 
-      if( (i == 2 || j == 2 || i == 5 || j == 5) && i != 0 && j != 0 && i != 7 && j != 7 && i != 1 && j != 1 && i != 6 && j != 6){
-        if( blink(i,j,i,j,2000, 2) == 1){
-          continue;
-        }
-      }
-      
-      
-      
-      switchLED(row[i],column[j],1);      
-      //delay(0);      
-      switchLED(row[i],column[j],0);
-    }
-  }
-}
 void clearDisplay(){
    for(int i = 0; i<=7; i++){
       digitalWrite(row[i],LOW); 
@@ -109,6 +71,7 @@ void clearDisplay(){
     digitalWrite(column[i], HIGH);
   } 
 }
+
 void switchLED(int r, int c, bool ON){
   if(ON){
     digitalWrite(r, HIGH);
@@ -117,5 +80,64 @@ void switchLED(int r, int c, bool ON){
   else{
     digitalWrite(r, LOW);
     digitalWrite(c, HIGH);
+  }
+}
+
+void enjoystick(){
+  if( (millis() - timer_player) >= 500){
+  if(analogRead(x_con)<1000){
+    if( mapcords(2+player_coords[0], 3+player_coords[1])==0){
+      player_coords[0] -=1;
+    }
+  }
+  if (analogRead(x_con)>3000){
+    if( mapcords(4+player_coords[0], 3+player_coords[1])==0){
+      player_coords[0] +=1;
+    }
+  }
+  if (analogRead(y_con)<1000){
+    if( mapcords(3+player_coords[0], 2+player_coords[1])==0){
+      player_coords[1] -=1;
+    }
+  }
+  if (analogRead(y_con)>3000){
+    if( mapcords(3+player_coords[0], 4+player_coords[1])==0){
+      player_coords[1] +=1;
+    } 
+  }
+  timer_player = millis();
+}
+}
+
+int mapcords( int x, int y){
+  int max = 17;
+  if( x<0 || x>max || y<0 || y>max){
+    return 0;
+    //Out of Map
+  }
+  return cords_17_289[y * max + x];
+  //row (x) = 17 long
+}
+
+void loop() {
+ 
+  for(int i=0; i<=7; i++){
+    for(int j=0; j<=7; j++){
+
+      enjoystick();
+      
+      if(i == 3 && j == 3){
+        if((millis() % 500) > 250){
+          continue;
+        }
+        switchLED(row[i],column[j],1);
+      }
+      else{
+        switchLED(row[i],column[j],mapcords(j+player_coords[0], i+player_coords[1]));
+      }
+      
+      delayMicroseconds(50);   
+      switchLED(row[i],column[j],0);
+    }
   }
 }
