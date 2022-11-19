@@ -20,7 +20,3 @@ erweitert wird ja nach schwierigkeit oder fortschritt.
 3. Vervollständigung mit "Bugfreiem" spiel und richtigem input. Mögliche erweiterung mit sound oä
 
 4. Schauen was mach noch machen kann, erweitern kann, oben drauf setzen kann. 
-
-
-
-
