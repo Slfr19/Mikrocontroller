@@ -27,7 +27,7 @@ int time_past = millis();
 const int nxn_cords = 17;
 int goals[nxn_cords][nxn_cords];
 int array2[nxn_cords][nxn_cords];
-
+int blink_delay = 50;
             
 int cords_17_289[289] = {
 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, //changed into 2 dims 1 
@@ -47,6 +47,44 @@ int cords_17_289[289] = {
 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, //changed into 2 dims 15
 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, //changed into 2 dims 16
 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0};//changed into 2 dims 17
+
+int labyrinth[289] = {
+1,  1,  1,  1,  1,  1,  1,  3,  1,  1,  1,  1,  1,  1,  1,  1,  1,
+1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  1,
+1,  0,  1,  1,  1,  0,  1,  1,  1,  1,  1,  0,  1,  1,  1,  0,  1,
+1,  0,  0,  0,  1,  0,  0,  0,  1,  0,  1,  0,  0,  0,  0,  0,  1,
+1,  1,  1,  1,  1,  0,  1,  0,  1,  0,  1,  1,  1,  1,  1,  0,  1,
+1,  0,  0,  0,  1,  0,  1,  0,  1,  0,  1,  0,  0,  0,  1,  0,  1,
+1,  0,  1,  0,  1,  1,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,
+1,  0,  1,  0,  0,  0,  1,  0,  1,  0,  1,  0,  1,  0,  0,  0,  1,
+1,  0,  1,  1,  1,  0,  1,  0,  1,  0,  1,  0,  1,  1,  1,  1,  1,
+1,  0,  0,  0,  1,  0,  0,  0,  1,  0,  1,  0,  1,  0,  0,  0,  1,
+1,  1,  1,  0,  1,  1,  1,  1,  1,  0,  1,  0,  1,  0,  1,  1,  1,
+1,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  1,  0,  0,  0,  1,
+1,  0,  1,  1,  1,  0,  1,  1,  1,  1,  1,  0,  1,  1,  1,  0,  1,
+1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  1,  0,  0,  0,  1,  0,  1,
+1,  0,  1,  1,  1,  1,  1,  0,  1,  1,  1,  1,  1,  0,  1,  0,  1,
+0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,
+1,  1,  1,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  2};
+
+int endfeld[289] = {
+0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+0,  0,  0,  3,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+1,  0,  1,  0,  1,  0,  0,  0,  1,  0,  1,  1,  1,  0,  1,  0,  1,
+1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  1,  1,
+1,  1,  1,  0,  0,  1,  0,  1,  0,  0,  1,  1,  1,  0,  1,  0,  1,
+0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+0,  0,  0,  0,  0,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0};
 
 
 void setup() {
@@ -174,6 +212,9 @@ void switchLED(int r, int c, bool ON){
 
 
 void enjoystick(){ // Reads Joystick input
+  if ((analogRead(x_con)>=1000)&&(analogRead(x_con)<=1000)&& (analogRead(y_con)>=1000) && (analogRead(y_con)<=3000)){
+    timer_player = 0;
+  }
   if( (millis() - timer_player) >= 500){
   if (analogRead(x_con)<1000){
     move(1,0);  } //Oben
@@ -226,6 +267,56 @@ void move(int px, int py){ //Movement Logic
         }
 }
 
+int won(){
+  if(cords_17_289[0 + 15*nxn_cords] == 3){
+    endscreen();
+  }
+  for (int i = 0; i < nxn_cords; i++) { // Get goal locations
+      for (int j = 0; j < nxn_cords; j++) {
+        if(cords_17_289[j + i*nxn_cords] == 2) {
+          return 0;
+      }
+   }
+}
+if(blink_delay > 50){
+  if(blink_delay > 51){  
+  return 0;
+}
+  blink_delay +=1;
+  endscreen();
+  return 0;
+}
+
+for (int i = 0; i < nxn_cords; i++) { // Get goal locations
+      for (int j = 0; j < nxn_cords; j++) {
+        
+          cords_17_289[j + i*nxn_cords]= labyrinth[j + i*nxn_cords];
+   }
+}
+screen_coords[0] = 4;
+screen_coords[1] = -3;
+blink_delay = 51;
+return 0;
+}
+
+void endscreen(){
+  for (int i = 0; i < nxn_cords; i++) { // Get goal locations
+      for (int j = 0; j < nxn_cords; j++) {
+        
+          cords_17_289[j + i*nxn_cords]= endfeld[j + i*nxn_cords];
+   }
+}
+int endscore = millis();
+for (int i = 0; i < nxn_cords; i++){
+if(endscore % 2 ==1){
+   cords_17_289[17-i]= 1;
+}
+endscore = endscore /2;
+ }
+ screen_coords[0] = 0;
+screen_coords[1] = 0;
+}
+
 void loop() {
   enjoystick();
   for(int i=0; i<=7; i++){
@@ -237,9 +328,10 @@ void loop() {
         switchLED(row[i],column[j],mapcords(j+screen_coords[0], i+screen_coords[1]));
       }
       
-      delayMicroseconds(50);   //Die LEDs brauchen den Delay um nicht zu dimm zu wirken. 
+      delayMicroseconds(blink_delay);   //Die LEDs brauchen den Delay um nicht zu dimm zu wirken. 
       
       switchLED(row[i],column[j],0); //Die LEDs werden bei jedem programmzyklus kurz ein und aus geschalten um die wiedergabe zu ermöglichen. 
     }
   }
+  won();
 }
