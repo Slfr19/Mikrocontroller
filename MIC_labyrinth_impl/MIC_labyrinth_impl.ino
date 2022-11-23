@@ -1,14 +1,14 @@
-const int r4 = 32; // pin for row 0
-const int r6 = 33; // pin for row 1
+const int r4 = 32; // Scheinbare random ansprechen von pins um die LED 8x( Matrix richtig anzuschließen in reihe.
+const int r6 = 33; // 
 const int c1 = 25; // ...
 const int c2 = 26;
 const int r7 = 27;
 const int c4 = 14;
 const int r5 = 12;
 const int r2 = 13;
-const int c7 = 23; // pin for column 0
-const int c6 = 22; // pin for column 1
-const int r1 = 1; // ...
+const int c7 = 23; 
+const int c6 = 22; 
+const int r1 = 1; // 
 const int c0 = 3;
 const int r3 = 21;
 const int c5 = 19;
@@ -39,7 +39,7 @@ int cords_17_289[289] = {
 0,  0,  0,  0,  1,  0,  2,  0,  1,  0,  0,  0,  1,  0,  0,  0,  0, //changed into 2 dims 7
 0,  0,  0,  0,  1,  0,  0,  0,  1,  2,  1,  0,  1,  0,  0,  0,  0, //changed into 2 dims 8
 0,  0,  0,  0,  1,  1,  1,  2,  0,  0,  0,  0,  1,  0,  0,  0,  0, //changed into 2 dims 9
-0,  0,  0,  0,  1,  0,  0,  0,  1,  1,  1,  1,  1,  0,  0,  0,  0, //changed into 2 dims 10
+0,  0,  0,  0,  1,  0,  0,  0,  0,  1,  1,  1,  1,  0,  0,  0,  0, //changed into 2 dims 10
 0,  0,  0,  0,  0,  1,  0,  3,  4,  4,  4,  1,  0,  0,  0,  0,  0, //changed into 2 dims 11
 0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0, //changed into 2 dims 12
 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, //changed into 2 dims 13
@@ -99,14 +99,14 @@ for (int i = 0; i < nxn_cords; i++) { // Get goal locations
   clearDisplay();
 } //setup end
 
-int blinkk(int blin, int fak = 2){ // Function to make a specific LED blinkk with a certain frequency
+
+int blink(int blin, int fak = 2){ // Function to make a specific LED blink with a certain frequency
   if((millis() % blin) <= (blin / fak))
     {
     return 1; 
     }
   return 0;
 }
-
 
 
 int mapcords( int x, int y){
@@ -123,24 +123,24 @@ switch( cords_17_289[y * nxn_cords + x] ){
           return 1;
           break;
         case 2: //CHEST
-          return blinkk( 250);
+          return blink( 250);
           break;
         case 3: //PLAYER
-          return blinkk( 125 );
+          return blink( 125 );
           break;
         case 4: //GOAL
-          return blinkk(1000);
+          return blink(1000);
           break;
         case 5: //PLAYER ON GOAL
-          return blinkk(125);
+          return blink(125);
           break;
         case 6: //CHEST ON GOAL
-          return blinkk( 50);
+          return blink( 50);
           break;
         case 7:  //FREE SPACE INGAME
           return 0;
           break;
-        default:  //FREE SPACE INGAME
+        default:  //ERROR SET FREE SPACE
           return 0;
           break;
         }
@@ -148,14 +148,6 @@ switch( cords_17_289[y * nxn_cords + x] ){
  // return cords_17_289[y * max + x];
   //row (x) = 17 long
 //}
-
-
-
-
-
-
-
-
 
 
 void clearDisplay(){
@@ -175,37 +167,6 @@ void switchLED(int r, int c, bool ON){
   else{
     digitalWrite(r, LOW);
     digitalWrite(c, HIGH);
-  }
-}
-
-
-
-
-
-
-int blink(int blin, int fak = 2){ // Function to make a specific LED blink with a certain frequency
-  if((millis() % blin) <= (blin / fak))
-    {
-    return 1; 
-    }
-  return 0;
-}
-
-void loop() {
-  enjoystick();
-  for(int i=0; i<=7; i++){
-    for(int j=0; j<=7; j++){
-      if(i == 3 && j == 3){ //Blinkfunktion für den dot in der mitte. bei [3|3]
-        switchLED(row[i],column[j], blink(125));
-      }
-      else{ //Else means, wenn es um alles nur nicht um den Dot in der Mitte geht. 
-        switchLED(row[i],column[j],mapcords(j+screen_coords[0], i+screen_coords[1]));
-      }
-      
-      delayMicroseconds(50);   //Die LEDs brauchen den Delay um nicht zu dimm zu wirken. 
-      
-      switchLED(row[i],column[j],0); //Die LEDs werden bei jedem programmzyklus kurz ein und aus geschalten um die wiedergabe zu ermöglichen. 
-    }
   }
 }
 
@@ -240,7 +201,7 @@ void move(int px, int py){ //Movement Logic
           || (cords_17_289[locX + px+ nxn_cords *(locY + py)] == 2 && cords_17_289[locX + 2*px+ nxn_cords *(locY + 2*py)] == 6)) {
         
 
-      } else {
+      } else { //Bitte Moven
         screen_coords[0] +=px; 
         screen_coords[1] +=py;
 
@@ -262,8 +223,23 @@ void move(int px, int py){ //Movement Logic
         if((cords_17_289[locX + 2*px+(locY + 2*py)*nxn_cords] == 2) && array2[locX + 2*px][locY + 2*py] == 1) {
           cords_17_289[locX + 2*px+17*(locY + 2*py)] = 6;
         }
-        
-      }
+        }
+}
 
-  //interprete_bitmap();   
+void loop() {
+  enjoystick();
+  for(int i=0; i<=7; i++){
+    for(int j=0; j<=7; j++){
+      if(i == 3 && j == 3){ //Blinkfunktion für den dot in der mitte. bei [3|3]
+        switchLED(row[i],column[j], blink(125));
+      }
+      else{ //Else means, wenn es um alles nur nicht um den Dot in der Mitte geht. 
+        switchLED(row[i],column[j],mapcords(j+screen_coords[0], i+screen_coords[1]));
+      }
+      
+      delayMicroseconds(50);   //Die LEDs brauchen den Delay um nicht zu dimm zu wirken. 
+      
+      switchLED(row[i],column[j],0); //Die LEDs werden bei jedem programmzyklus kurz ein und aus geschalten um die wiedergabe zu ermöglichen. 
+    }
+  }
 }
