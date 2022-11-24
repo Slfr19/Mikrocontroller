@@ -212,7 +212,7 @@ void switchLED(int r, int c, bool ON){
 
 
 void enjoystick(){ // Reads Joystick input
-  if ((analogRead(x_con)>=1000)&&(analogRead(x_con)<=1000)&& (analogRead(y_con)>=1000) && (analogRead(y_con)<=3000)){
+  if ((analogRead(x_con)>=1000)&&(analogRead(x_con)<=3000)&& (analogRead(y_con)>=1000) && (analogRead(y_con)<=3000)){
     timer_player = 0;
   }
   if( (millis() - timer_player) >= 500){
@@ -306,6 +306,7 @@ void endscreen(){
           cords_17_289[j + i*nxn_cords]= endfeld[j + i*nxn_cords];
    }
 }
+//Print endscore in binary auf bitmap
 int endscore = millis();
 for (int i = 0; i < nxn_cords; i++){
 if(endscore % 2 ==1){
